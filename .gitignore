@@ -4,4 +4,4 @@ target/*
 .settings/
 .settings/*
 */.settings/*
-.project
+*/.classpath
