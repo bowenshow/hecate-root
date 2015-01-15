@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.chaos.hecate</groupId>
+    <artifactId>hecate-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>hecate-service</artifactId>
+  <packaging>war</packaging>
+  <name>hecate-service</name>
+
+
+  <dependencies>
+    <dependency>  
+      <groupId>com.chaos.hecate</groupId>  
+      <artifactId>hecate-persist</artifactId>  
+      <version>${project.version}</version>  
+    </dependency>  
+
+    <dependency>  
+      <groupId>com.chaos.hecate</groupId>  
+      <artifactId>hecate-utils</artifactId>  
+      <version>${project.version}</version>  
+    </dependency>  
+  </dependencies>
+</project>
