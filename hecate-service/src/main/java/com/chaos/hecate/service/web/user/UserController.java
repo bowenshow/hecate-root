@@ -1,5 +1,7 @@
 package com.chaos.hecate.service.web.user;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chaos.hecate.persist.user.dao.UserLoginRecordDao;
 import com.chaos.hecate.persist.user.model.User;
+import com.chaos.hecate.persist.user.service.UserLoginRecordManager;
 import com.chaos.hecate.persist.user.service.UserManager;
 import com.chaos.hecate.utils.JsonMessageMaker;
 import com.chaos.hecate.utils.PasswordUtil;
@@ -27,6 +31,9 @@ public class UserController {
 	@Autowired
 	private UserManager um;
 	
+	@Autowired
+	private UserLoginRecordManager ulrm;
+	
 	@ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(HttpServletRequest request) {
@@ -42,8 +49,10 @@ public class UserController {
         u = new User();
         u.setMobile(mobile);
         u.setPassword(PasswordUtil.springSecurityPasswordEncode(psw, mobile));
+        u.setLastLoginTime(new Date());
         try {
 			u = um.save(u);
+			ulrm.recordUserLogin(u, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Create user failed: " + e.toString());
@@ -52,4 +61,24 @@ public class UserController {
 		return JsonMessageMaker.createErrorMsg(0, u.toJson());
 	}
 
+	@ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(HttpServletRequest request) {
+        String mobile = request.getParameter(MOBILE_NUM);
+        
+        User u = um.findByMobile(mobile);
+        if (null == u) {
+        	log.warn("Mobile number is not existed: " + mobile);
+        	return JsonMessageMaker.createErrorMsg(10003, "手机号码不存在,请核对!");
+		}
+        String psw = request.getParameter(PASSWORD);
+        String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
+        if (check.equals(u.getPassword())) {
+        	log.debug("User logged in: " + mobile);
+        	ulrm.recordUserLogin(u, null);
+        	return JsonMessageMaker.createErrorMsg(0, u.toJson());
+		} else {
+			return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
+		}
+	}
 }

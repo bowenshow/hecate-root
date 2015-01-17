@@ -16,7 +16,7 @@ import com.chaos.hecate.utils.persistence.IdEntity;
 @Entity
 @Table(name = "hecate_users")
 @Where(clause="deleted=0")
-public class User extends IdEntity implements Serializable,JSONUtil2Serialization{
+public class User extends IdEntity implements Serializable,JSONUtil2Serialization {
 
 	/**
 	 * 
