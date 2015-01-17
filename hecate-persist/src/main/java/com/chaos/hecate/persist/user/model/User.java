@@ -32,7 +32,6 @@ public class User extends IdEntity implements Serializable,JSONUtil2Serializatio
 	private String headImgUrl;
 	private int sex;
 	private Date createTime;
-	private Date lastLoginTime;
 	
 	@Column(name="username")	
 	public String getUsername() {
@@ -114,15 +113,6 @@ public class User extends IdEntity implements Serializable,JSONUtil2Serializatio
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	@Column(name="last_login_time")
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
-
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
 	}
 
 	public String toJson() {
