@@ -48,7 +48,6 @@ public class UserController {
         u = new User();
         u.setMobile(mobile);
         u.setPassword(PasswordUtil.springSecurityPasswordEncode(psw, mobile));
-        u.setLastLoginTime(new Date());
         try {
 			u = um.save(u);
 			ulrm.recordUserLogin(u, null);
