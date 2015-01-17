@@ -1,8 +1,8 @@
 package com.chaos.hecate.service.web.user;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +35,7 @@ public class UserController {
 	
 	@ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request) {
+	public JSONObject register(HttpServletRequest request) {
         String mobile = request.getParameter(MOBILE_NUM);
         
         User u = um.findByMobile(mobile);
@@ -61,13 +61,13 @@ public class UserController {
 
 	@ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest request) {
+	public JSONObject login(HttpServletRequest request) {
         String mobile = request.getParameter(MOBILE_NUM);
         
         User u = um.findByMobile(mobile);
         if (null == u) {
         	log.warn("Mobile number is not existed: " + mobile);
-        	return JsonMessageMaker.createErrorMsg(10003, "手机号码不存在,请核对!");
+        	return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
 		}
         String psw = request.getParameter(PASSWORD);
         String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
