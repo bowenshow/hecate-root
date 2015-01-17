@@ -13,6 +13,9 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.chaos.hecate.utils.BeanUtils;
+import com.chaos.hecate.utils.HqlUtil;
+import com.chaos.hecate.utils.Page;
 import com.chaos.hecate.utils.persistence.BaseDaoInterface;
 
 /**

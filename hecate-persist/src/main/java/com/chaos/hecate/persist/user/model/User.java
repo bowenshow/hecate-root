@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
+import com.chaos.hecate.utils.JSONUtil2;
 import com.chaos.hecate.utils.JSONUtil2Serialization;
 import com.chaos.hecate.utils.persistence.IdEntity;
 
@@ -125,8 +126,7 @@ public class User extends IdEntity implements Serializable,JSONUtil2Serializatio
 	}
 
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		return JSONUtil2.objectToJson(this);
 	}
 
 }
