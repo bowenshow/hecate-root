@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaos.hecate.persist.user.dao.UserLoginRecordDao;
 import com.chaos.hecate.persist.user.model.User;
 import com.chaos.hecate.persist.user.service.UserLoginRecordManager;
 import com.chaos.hecate.persist.user.service.UserManager;
