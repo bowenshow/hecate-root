@@ -28,7 +28,7 @@ public class UserController {
 	private UserManager um;
 	
 	@ResponseBody
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(HttpServletRequest request) {
         String mobile = request.getParameter(MOBILE_NUM);
         
