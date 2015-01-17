@@ -62,21 +62,25 @@ public class UserController {
 	@ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JSONObject login(HttpServletRequest request) {
-        String mobile = request.getParameter(MOBILE_NUM);
-        
-        User u = um.findByMobile(mobile);
-        if (null == u) {
-        	log.warn("Mobile number is not existed: " + mobile);
-        	return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
-		}
-        String psw = request.getParameter(PASSWORD);
-        String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
-        if (check.equals(u.getPassword())) {
-        	log.debug("User logged in: " + mobile);
-        	ulrm.recordUserLogin(u, null);
-        	return JsonMessageMaker.createErrorMsg(0, u.toJson());
-		} else {
-			return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
+		try {
+	        String mobile = request.getParameter(MOBILE_NUM);
+	        User u = um.findByMobile(mobile);
+	        if (null == u) {
+	        	log.warn("Mobile number is not existed: " + mobile);
+	        	return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
+			}
+	        String psw = request.getParameter(PASSWORD);
+	        String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
+	        if (check.equals(u.getPassword())) {
+	        	log.debug("User logged in: " + mobile);
+	        	ulrm.recordUserLogin(u, null);
+	        	return JsonMessageMaker.createErrorMsg(0, u.toJson());
+			} else {
+				return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMessageMaker.createErrorMsg(99999, e.toString());
 		}
 	}
 }
