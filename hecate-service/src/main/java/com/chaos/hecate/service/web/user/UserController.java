@@ -35,7 +35,7 @@ public class UserController {
 	
 	@ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-	public JSONObject register(HttpServletRequest request) {
+	public String register(HttpServletRequest request) {
         String mobile = request.getParameter(MOBILE_NUM);
         
         User u = um.findByMobile(mobile);
@@ -60,8 +60,8 @@ public class UserController {
 	}
 
 	@ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-	public JSONObject login(HttpServletRequest request) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	public String login(HttpServletRequest request) {
 		try {
 	        String mobile = request.getParameter(MOBILE_NUM);
 	        User u = um.findByMobile(mobile);
