@@ -2,8 +2,6 @@ package com.chaos.hecate.service.web.user;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +32,7 @@ public class UserController {
 	private UserLoginRecordManager ulrm;
 	
 	@ResponseBody
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public String register(HttpServletRequest request) {
         String mobile = request.getParameter(MOBILE_NUM);
         
@@ -62,25 +60,20 @@ public class UserController {
 	@ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public String login(HttpServletRequest request) {
-		try {
-	        String mobile = request.getParameter(MOBILE_NUM);
-	        User u = um.findByMobile(mobile);
-	        if (null == u) {
-	        	log.warn("Mobile number is not existed: " + mobile);
-	        	return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
-			}
-	        String psw = request.getParameter(PASSWORD);
-	        String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
-	        if (check.equals(u.getPassword())) {
-	        	log.debug("User logged in: " + mobile);
-	        	ulrm.recordUserLogin(u, null);
-	        	return JsonMessageMaker.createErrorMsg(0, u.toJson());
-			} else {
-				return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return JsonMessageMaker.createErrorMsg(99999, e.toString());
+		String mobile = request.getParameter(MOBILE_NUM);
+		User u = um.findByMobile(mobile);
+		if (null == u) {
+			log.warn("Mobile number is not existed: " + mobile);
+			return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
+		}
+		String psw = request.getParameter(PASSWORD);
+		String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
+		if (check.equals(u.getPassword())) {
+			log.debug("User logged in: " + mobile);
+			ulrm.recordUserLogin(u, null);
+			return JsonMessageMaker.createErrorMsg(0, u.toJson());
+		} else {
+			return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
 		}
 	}
 }
