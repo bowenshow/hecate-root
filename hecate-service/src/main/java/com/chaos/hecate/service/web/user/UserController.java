@@ -18,7 +18,7 @@ import com.chaos.hecate.utils.PasswordUtil;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/uer")
 public class UserController {
 	private static Log log = LogFactory.getLog(UserController.class);
 	
