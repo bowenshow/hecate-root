@@ -76,4 +76,12 @@ public class UserController {
 			return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
 		}
 	}
+	
+	@ResponseBody
+    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	public void updateLocation(HttpServletRequest request) {
+		String longitude = request.getParameter("longitude");
+		String latitude = request.getParameter("latitude");
+		log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
+	}
 }
