@@ -80,8 +80,12 @@ public class UserController {
 	@ResponseBody
     @RequestMapping(value = "/updateLocation", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void updateLocation(HttpServletRequest request) {
-		String longitude = request.getParameter("longitude");
-		String latitude = request.getParameter("latitude");
-		log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
+		try {
+			String longitude = request.getParameter("longitude");
+			String latitude = request.getParameter("latitude");
+			log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
