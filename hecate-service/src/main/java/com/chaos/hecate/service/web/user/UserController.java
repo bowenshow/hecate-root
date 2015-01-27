@@ -83,7 +83,7 @@ public class UserController {
 		try {
 			String longitude = request.getParameter("longitude");
 			String latitude = request.getParameter("latitude");
-			log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
+			log.info(String.format("longitude: %s, latitude: %s", longitude, latitude));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
