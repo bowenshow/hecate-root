@@ -16,7 +16,7 @@ public class UserLoginRecordManager extends AbstractManager<UserLoginRecord> {
 	
 	@Autowired
 	private UserLoginRecordDao ulrd;
-
+	
 	@Override
 	protected BaseDaoInterface<UserLoginRecord, Serializable> getDao() {
 		return ulrd;

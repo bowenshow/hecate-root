@@ -24,6 +24,8 @@ public class UserController {
 	
 	private static final String MOBILE_NUM = "numero_de_mobile";
 	private static final String PASSWORD = "mot_de_pass";
+	private static final String DEVICE = "device";
+	private static final String DEVICE_UUID = "device_uuid";
 	
 	@Autowired
 	private UserManager um;
@@ -67,25 +69,17 @@ public class UserController {
 			return JsonMessageMaker.createErrorMsg(10003, "该手机号码未注册,请核对!");
 		}
 		String psw = request.getParameter(PASSWORD);
+		String device = request.getParameter(DEVICE);
 		String check = PasswordUtil.springSecurityPasswordEncode(psw, mobile);
 		if (check.equals(u.getPassword())) {
 			log.debug("User logged in: " + mobile);
-			ulrm.recordUserLogin(u, null);
+			ulrm.recordUserLogin(u, device);
+			um.updateUserCacheByUser(u);
 			return JsonMessageMaker.createErrorMsg(0, u.toJson());
 		} else {
 			return JsonMessageMaker.createErrorMsg(10004, "登录失败,密码不正确!");
 		}
 	}
 	
-	@ResponseBody
-    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public void updateLocation(HttpServletRequest request) {
-		try {
-			String longitude = request.getParameter("longitude");
-			String latitude = request.getParameter("latitude");
-			log.info(String.format("longitude: %s, latitude: %s", longitude, latitude));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 }

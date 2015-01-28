@@ -12,6 +12,7 @@
 		<param-value>
 			classpath*:/applicationContext-service.xml
  			classpath*:/applicationContext-persist.xml
+ 			classpath*:/applicationContext-cache.xml
 		</param-value>
 	</context-param>
 
