@@ -20,7 +20,7 @@
 	<!-- Jedis ConnectionFactory -->
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:host-name="${redis.host-name}" p:port="${redis.port}" p:use-pool="true" />
+		p:host-name="${redis.host}" p:port="${redis.port}" p:use-pool="true" />
 
 	<bean 
     id="stringRedisSerializer" 

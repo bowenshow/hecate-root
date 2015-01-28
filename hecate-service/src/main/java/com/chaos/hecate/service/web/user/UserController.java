@@ -49,8 +49,9 @@ public class UserController {
         u.setMobile(mobile);
         u.setPassword(PasswordUtil.springSecurityPasswordEncode(psw, mobile));
         try {
+        	String device = request.getParameter(DEVICE);
 			u = um.save(u);
-			ulrm.recordUserLogin(u, null);
+			ulrm.recordUserLogin(u, device);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Create user failed: " + e.toString());
