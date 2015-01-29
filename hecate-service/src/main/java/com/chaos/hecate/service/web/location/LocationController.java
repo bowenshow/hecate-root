@@ -42,7 +42,7 @@ public class LocationController {
 			loc.setLatitude(lati);
 			lm.save(loc);
 			
-			log.info(String.format("longitude: %s, latitude: %s", longitude, latitude));
+			log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
