@@ -31,8 +31,8 @@ public class Location extends IdEntity implements Serializable,JSONUtil2Serializ
 	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
-	private float longitude;
-	private float latitude;
+	private double longitude;
+	private double latitude;
 	private Date time;
 	
 	@ManyToOne
@@ -46,20 +46,20 @@ public class Location extends IdEntity implements Serializable,JSONUtil2Serializ
 	}
 
 	@Column(name="longitude")
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 	@Column(name="latitude")
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
