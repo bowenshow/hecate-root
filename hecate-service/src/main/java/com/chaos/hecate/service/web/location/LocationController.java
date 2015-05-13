@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chaos.hecate.persist.location.model.Location;
 import com.chaos.hecate.persist.location.service.LocationManager;
 import com.chaos.hecate.persist.user.service.UserManager;
+import com.chaos.hecate.service.map.baidu.BaiduMap;
 
 @Controller
 @RequestMapping("/location")
@@ -25,6 +26,9 @@ public class LocationController {
 	
 	@Autowired
 	private LocationManager lm;
+	
+	@Autowired
+	private BaiduMap bmap;
 	
 	@ResponseBody
     @RequestMapping(value = "/updateLocation", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
@@ -46,6 +50,15 @@ public class LocationController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@ResponseBody
+    @RequestMapping(value = "/getpoi", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	public String getpoi(HttpServletRequest request) {
+		String longitude = request.getParameter("longitude");
+		String latitude = request.getParameter("latitude");
+		log.debug(String.format("longitude: %s, latitude: %s", longitude, latitude));
+		return bmap.getPoiByGeocode(longitude, latitude).toString();
 	}
 
 }
