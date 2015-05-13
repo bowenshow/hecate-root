@@ -32,27 +32,29 @@ public class BaiduMap implements IMap {
 	}
 	
 	private String parsePoi(String input) {
-		String ret = null;
-		try {
-			Pattern p = Pattern.compile(GEOCODE_REGEX);
-			Matcher match = p.matcher(input);
-			ret = match.group(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			ret = "{\"status\":999, \"errmsg\":" + e.toString() + "}";
+		Pattern p = Pattern.compile(GEOCODE_REGEX);
+		Matcher match = p.matcher(input);
+		if (match.matches() && match.groupCount() > 0) {
+			return match.group(1);
 		}
-		return ret;
+		return input;
 	}
 
 	public static void main(String[] args) {
 		String test = "renderReverse&&renderReverse(12345)";
-		String regex = "renderReverse&&renderReverse\\((.*)\\)";
+		String regex = ".*\\((.*)\\).*";
 		Pattern p = Pattern.compile(regex);
 		Matcher match = p.matcher(test);
 		System.out.println(match.matches());
 		System.out.println(match.groupCount());
 		System.out.println(match.group(0));
 		System.out.println(match.group(1));
-		
+		String ret = HttpClientUtil.httpGet("http://api.map.baidu.com/geocoder/v2/?ak=E4805d16520de693a3fe707cdc962045&callback=renderReverse&location=39.983424,116.322987&output=json&pois=1");
+		System.out.println(ret);
+		match = p.matcher(ret);
+		System.out.println(match.matches());
+		System.out.println(match.groupCount());
+		System.out.println(match.group(0));
+		System.out.println(match.group(1));
 	}
 }
