@@ -30,7 +30,7 @@
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 	    <property name="converters">
 	        <set>
-	        	<bean class="com.chaos.hecate.service.web.utils.StringDateConvertor"/>
+	        	<bean class="com.chaos.hecate.utils.StringDateConvertor"/>
 	        </set>
 	    </property>
 	</bean>
