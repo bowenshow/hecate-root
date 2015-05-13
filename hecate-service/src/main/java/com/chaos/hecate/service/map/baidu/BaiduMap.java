@@ -3,6 +3,8 @@ package com.chaos.hecate.service.map.baidu;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONObject;
@@ -16,6 +18,8 @@ import com.chaos.hecate.utils.HttpClientUtil;
 public class BaiduMap implements IMap {
 	
 	private static String GEOCODE_REGEX = "renderReverse&&renderReverse\\((.*)\\)";
+	
+	private static Log log = LogFactory.getLog(BaiduMap.class);
 
 	@Override
 	public JSONObject getPoiByGeocode(String longitude,
@@ -23,6 +27,7 @@ public class BaiduMap implements IMap {
 		String ak = SystemConfig.getProperty("baidumap.ak");
 		String url = String.format(API.BAIDU_GEOCODE_TO_POI, ak, latitude, longitude);
 		String ret = HttpClientUtil.httpGet(url);
+		log.debug("POI: " + ret);
 		return JSONObject.fromObject(parsePoi(ret));
 	}
 	
@@ -34,7 +39,7 @@ public class BaiduMap implements IMap {
 			ret = match.group(1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ret = input;
+			ret = "{\"status\":999, \"errmsg\":" + e.toString() + "}";
 		}
 		return ret;
 	}
