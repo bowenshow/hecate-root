@@ -27,7 +27,6 @@ public class BaiduMap implements IMap {
 		String ak = SystemConfig.getProperty("baidumap.ak");
 		String url = String.format(API.BAIDU_GEOCODE_TO_POI, ak, latitude, longitude);
 		String ret = HttpClientUtil.httpGet(url);
-		log.debug("POI: " + ret);
 		return JSONObject.fromObject(parsePoi(ret));
 	}
 	
